@@ -1,0 +1,25 @@
+cache
+.cache
+cache/
+.Python
+.python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+venv
+
+# from gitignore.io
+pip-selfcheck.json
+
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+profile_default/
+ipython_config.py
+
