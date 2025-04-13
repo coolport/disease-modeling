@@ -1,14 +1,23 @@
 # Messy notes on some prerequisites
 
-Main: <https://www.youtube.com/watch?v=aircAruvnKk>\
-On neutral network parameters (weights, biases, activation function)
+**Main:**
+
+- <https://www.youtube.com/watch?v=aircAruvnKk> (Part 1)
+- <https://www.youtube.com/watch?v=IHZwWFHWa-w> (Part 2)
+
+  **On neutral network parameters (weights, biases, activation function):**
 
 - <https://www.youtube.com/watch?v=sM2Mm6aT_HI>
 - <https://www.youtube.com/watch?v=SJ-hWwBF3zU>
+- <https://www.youtube.com/watch?v=pg3hJpSopHQ>
 
-## What is a neural network?
+Example/context of notes: mnist dataset (handwritten numbers)
 
-Example/ontext of notes: mnist dataset (handwritten numbers)
+## PART 1: What is a neural network?
+
+- Input layer
+- Hidden layer(s)
+- Output layer
 
 ### Neurons
 
@@ -50,10 +59,10 @@ refinement, from understanding smaller patterns and patching them up togfethr ty
 
 ## What parameters should the network have?
 
-- (in our example) fo the 2nd layer to pick up on smaller edges?, for the 3rd.. etcetc
-- what knobs should we tweak so that it's exprsesive enough for layers to pick up on patterns etc
+- (in our example) for the 2nd layer to pick up on smaller edges?, for the 3rd.. etcetc
+- what "knobs" should we tweak so that it's exprsesive enough for layers to pick up on patterns etc
 
-1. what you do is assign a _WEIGHT_ (just numbers) to each one of the connections betweene our neurons (2nd layer ucrrently speakng) and the neurons from the first layer
+1. what you do is assign a _WEIGHT_ (just numbers) to each one of the connections betweene our neurons from one layer to another
 
 2. take the activations from the first layer and compute their weighted sum according to these weights
 
@@ -116,3 +125,79 @@ or basically how all of this is handled in practice
 
 - each neuron is more of a function that a simple number holder
 - when it takes the outputs of all the functions of the previous layer and outputs a 0-1 value
+  ***
+
+## PART 2: How do neural networks **_learn?_**
+
+context is still mnist
+
+### Recap
+
+28x28 = 784 pixels
+each pixel grayscale value from 0 to 1
+these determine the activation of the 784 neurons in the input layer of the
+neural network
+the activation of each neuron in the next layers is based on the weihted some on all the activations of the
+previous layer + some specific bias then apply activation function
+
+learning = tweaking weights and biases to alter correctness of model
+
+motivation behind the layer structure is that 1st layer picksu p on edges, 2nd on bigger
+patterns like loops and lines and last pieces patterns to recog digits
+
+### Learning
+
+weights and biases initially set randomly (example)
+
+define cost function
+it is done by
+
+low if results are correct, large if netwrok is wrongish
+get avg of cost of the thousands of training examples, this will bbe the measure
+to how lousy the network is and to let it know how much its wrong
+
+so
+the network itself is basically a function, taking 784 numbers (pixels) and
+outputs 10 numbers, parameterized by the 13,002 weights/biases
+
+the cost function wraps the whole function, it takes the 13002 weights and biases
+and outputs 1 number (the cost), it is defined by the networks
+bhavior on the thousansds of training data.
+so the cost function represents the specific configuration or parameters of
+the model to produce a certain output or accuracy
+
+so meaning.. the goal is to make the cost or the output of the cost function lower.
+
+mathematically, u are to find the input of this function that will minimize
+the value of this function
+
+- not easy especially for complicated functions like the cost function of this example which
+  contains like 13k weights
+  (this example has like 2 hidden layers, practical projs have way more lol)
+- instead of figuring out the perfect input (aka EXACT configuration of the thousands or millions or weights)
+  that producin the perfect predictions on the model, the btter approahc is..
+
+is to start at any input, then figure out which direction to go, to make the cost ouput lowe
+figure out slope of where u are, shift to left is slope is positive, and vice versa..
+you will find a **LOCAL** minimum..
+analogy to this is a ball rolling down a hill(curvy graph), eventually settling down on a low point / valley
+
+the local minimum is **doable**...
+global minimum is very hard to find
+
+l.
+
+### Gradient Descento
+
+moving to more complicated functions .. take a funcdtion with 2 inputs and 1 output
+
+x y plane input space, the cost function being a graph above it
+which direction decreases C(x,y) most quickly? (going donw hill)
+
+in multivariable calculus the gradient of a function, gives u the direction of the steepest ascent
+or which direction increases the function most quicklyu
+taking the negative of this gives u the steepest slope
+
+- the length of this gradient vector is an indication to how steep the steepest slope is
+
+what matters rn is that a way to compute this vector exists. u dnt have to know actual multivar calc
