@@ -260,4 +260,16 @@ meaning foundational knowledge lang talaga and things here may or may not be the
 gradient descent review
 by learning, we mean what weights or biases minimize a cost function
 
-the cost of a single training example
+the cost of a single training example:
+
+- take output the network gives, along the output that you intended it to give (correct outuput)
+- add up the squares of the differences of components (see pic)
+- this will give the total cost of the network
+- what we are looking for is the negative gradient of this cost function, which will tell
+  how we need to change all the parameters to minimize the cost
+
+backpropagation is an algorithm for computing that gradient.
+
+### Walkthrough
+
+antok
