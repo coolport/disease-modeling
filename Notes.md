@@ -4,6 +4,7 @@
 
 - <https://www.youtube.com/watch?v=aircAruvnKk> (Part 1)
 - <https://www.youtube.com/watch?v=IHZwWFHWa-w> (Part 2)
+- <https://www.youtube.com/watch?v=Ilg3gGewQ5U> (Part 3)
 
   **On neutral network parameters (weights, biases, activation function):**
 
@@ -14,6 +15,17 @@
 Example/context of notes: mnist dataset (handwritten numbers)
 
 ## PART 1: What is a neural network?
+
+(from pytorch.org)
+Neural networks (NNs) are a collection of nested functions that are executed on some input data. These functions are defined by parameters (consisting of weights and biases), which in PyTorch are stored in tensors.
+
+Training a NN happens in two steps:
+
+Forward Propagation: In forward prop, the NN makes its best guess about the correct output. It runs the input data through each of its functions to make this guess.
+
+Backward Propagation: In backprop, the NN adjusts its parameters proportionate to the error in its guess. It does this by traversing backwards from the output, collecting the derivatives of the error with respect to the parameters of the functions (gradients), and optimizing the parameters using gradient descent. For a more detailed walkthrough of backprop, check out this video from 3Blue1Brown.
+
+---
 
 - Input layer
 - Hidden layer(s)
@@ -187,7 +199,7 @@ global minimum is very hard to find
 
 l.
 
-### Gradient Descento
+### Gradient Descent
 
 moving to more complicated functions .. take a funcdtion with 2 inputs and 1 output
 
@@ -201,3 +213,51 @@ taking the negative of this gives u the steepest slope
 - the length of this gradient vector is an indication to how steep the steepest slope is
 
 what matters rn is that a way to compute this vector exists. u dnt have to know actual multivar calc
+
+#### Backpropagation
+
+this is the algorithm that computes the gradient efficiently (pretty much how a neural network learns)
+
+a neural network learning = minimizing the cost function
+
+repeatedly nudging an input of af unction by some mulitple of the neagtive gradient
+is called gradient descent
+
+- to converge towards a local minimum of a cost function
+
+#### Gradeint descent recap so far
+
+neural network function
+
+- input 784 numbers (pixels)
+- output 10 numbers
+- parameters (13,002 weights/biases)
+
+cost function
+
+- input: 13,002 weihgts/biases
+- output 1 number(the cost) -- a single measure of lousiness
+- parameters: the many training examples
+
+the gradient of the cost function
+
+- what changes to all these weights and biases cause the fastest change to the cost function
+- "which changes to the parameters matter the most"
+
+#### analysis of the network
+
+..in the example with 2 hidden layers, we can get a 96% success on new imgs it hasnt seen
+
+cant "draw" .. for ex inptting gibberish img will make it confidently output a digit
+extremely constrained worldview
+
+the setup of the network is actuallya rchaic in the vid. shit from the 80s . wala pa sa newwer technology like CNNs (convolutional neural netowrks), lstm, etc.
+meaning foundational knowledge lang talaga and things here may or may not be the standard still
+....though w further search fundamental (non negotiable)parts naman mostly in this vid and notes, like graient descent, cost function (mas nababasa ko "loss function" recently in place of this but same thing) all still necessary parts of implementing nad traininga neural network
+
+## PART 3: Backpropagation
+
+gradient descent review
+by learning, we mean what weights or biases minimize a cost function
+
+the cost of a single training example
