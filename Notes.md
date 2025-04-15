@@ -257,8 +257,7 @@ meaning foundational knowledge lang talaga and things here may or may not be the
 
 ## PART 3: Backpropagation
 
-gradient descent review
-by learning, we mean what weights or biases minimize a cost function
+recap again: by learning, we mean what weights or biases minimize a cost function
 
 the cost of a single training example:
 
@@ -272,4 +271,46 @@ backpropagation is an algorithm for computing that gradient.
 
 ### Walkthrough
 
-antok
+## CONVOLUTIONAL NEURAL NETWORKS
+
+<https://www.youtube.com/watch?v=8NbXFoVk1mo>
+<https://www.youtube.com/watch?v=pj9-rr1wDhM>
+
+<https://www.ibm.com/think/topics/convolutional-neural-networks>
+<https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-convolutional-neural-networks>\
+
+type of neural network that is distinguished from other types or subsets by its superior
+performanmce with img, audio, speech inputs.
+
+3 main layers:
+
+- convolutional layer
+- pooling layer
+- fully connected (fc) layer
+
+diff from normal neural networks (vanilla nn / fully conneted neural networks)
+
+- no spacial awareness in vanilla nn, since filters/kernels arent used (grid that slides along an img to learn patterns)
+- the whole grid or res say 28x28, like in the example earlier it just gets turned into a vector with 784 value
+  and that gets passed to the next layers as usual, with no filter or pooling steps like in CNNs
+- useable parin normal nn for basic computer vision like mnist
+
+- typically utilized for classicifcation and computer vision tasks
+- under the hood its just a shitton of matrix multiplication (imgs are 2d grid represent by matrix, filters are matrices as well and other things, and everythig in between is just matrix operations)
+
+### Filters
+
+aka kernels aka ?
+performs the pattern recognition
+
+goes through matrix of input img (say 28x28), applies convoltuional opearation that will produce
+a new output based on the feature it s set to "highlight".
+goes line by line and magnitude of this is called the filter _stride_
+
+padding -
+
+### Pooling
+
+### Types of CNNs
+
+- resnet, alexnet, vggnet, googlenet
