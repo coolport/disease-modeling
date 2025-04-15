@@ -1,0 +1,67 @@
+~/code/python/modeling/finals main*
+venv ❯ cat kagglemodel_pytorch.py | grep num_epochs
+    model, train_loader, val_loader, criterion, optimizer, num_epochs=2, device="cuda"
+    for epoch in range(num_epochs):
+            train_loader, desc=f"Epoch {epoch + 1}/{num_epochs}"
+            f"Epoch {epoch + 1}/{num_epochs}: Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.2f}%, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.2f}%"
+    model, train_loader, val_loader, criterion, optimizer, num_epochs=2, device=device
+
+~/code/python/modeling/finals main*
+venv ❯ p3 kagglemodel_pytorch.py
+Data source import complete.
+Num of images: 1584
+Single image shape before flattening: (128, 128, 3)
+Num of images: 1440
+Single image shape before flattening: (128, 128, 3)
+Num of images: 1600
+Single image shape before flattening: (128, 128, 3)
+Num of images: 1308
+Single image shape before flattening: (128, 128, 3)
+Disease: Bacterialblight --- Images: 1584
+Disease: Blast --- Images: 1440
+Disease: Brownspot --- Images: 1600
+Disease: Tungro --- Images: 1308
+/home/aidan/code/python/modeling/finals/venv/lib/python3.11/site-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: CUDA unknown error - this may be due to an incorrectly set u
+p environment, e.g. changing env variable CUDA_VISIBLE_DEVICES after program start. Setting the available devices to be zero. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+Using device: cpu
+Epoch 1/2: 100%|██████████████████████████████████████████████████| 69/69 [01:58<00:00,  1.71s/it]
+Epoch 1/2: Train Loss: 1.3207, Train Acc: 35.25%, Val Loss: 1.2614, Val Acc: 42.99%
+Model saved with validation accuracy: 42.99%
+Epoch 2/2: 100%|██████████████████████████████████████████████████| 69/69 [01:58<00:00,  1.71s/it]
+Epoch 2/2: Train Loss: 1.1663, Train Acc: 50.44%, Val Loss: 1.1499, Val Acc: 48.33%
+Model saved with validation accuracy: 48.33%
+Test Accuracy: 53.75%
+Actual: Bacterialblight
+Predicted: Bacterialblight
+Confidence: 0.4071
+Actual: Blast
+Predicted: Bacterialblight
+Confidence: 0.2969
+Actual: Brownspot
+Predicted: Brownspot
+Confidence: 0.3904
+Actual: Tungro
+Predicted: Brownspot
+Confidence: 0.3225
+
+
+
+res
+
+
+
+Model saved with validation accuracy: 48.33%
+Test Accuracy: 53.75%
+Actual: Bacterialblight
+Predicted: Bacterialblight
+Confidence: 0.4071
+Actual: Blast
+Predicted: Bacterialblight
+Confidence: 0.2969
+Actual: Brownspot
+Predicted: Brownspot
+Confidence: 0.3904
+Actual: Tungro
+Predicted: Brownspot
+Confidence: 0.3225
