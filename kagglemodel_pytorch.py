@@ -440,8 +440,16 @@ def predict_disease_batch(
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.to(device)
     model.eval()
+    # predict_disease("/home/aidan/code/python/modeling/finals/")
+    # /home/aidan/.cache/kagglehub/datasets/nirmalsankalana/rice-leaf-disease-image/versions/1/Blast/BLAST1_004.jpg
+    predict_disease(
+        " /home/aidan/.cache/kagglehub/datasets/nirmalsankalana/rice-leaf-disease-image/versions/1/Blast/BLAST1_004.jpg "
+    )
 
     results = []
+    # result = predict_disease("/path/to/your/image.jpg")
+    # print(f"Predicted disease: {result['disease']}")
+    # print(f"Confidence: {result['confidence']:.4f}")
 
     for path in image_paths:
         # Load and preprocess image
