@@ -61,7 +61,7 @@ def load_and_preprocess_image(image_path):
 
 
 # Path to your specific image
-image_path = "/home/aidan/.cache/kagglehub/datasets/nirmalsankalana/rice-leaf-disease-image/versions/1/Blast/BLAST1_002.jpg"
+image_path = "/home/aidan/.cache/kagglehub/datasets/nirmalsankalana/rice-leaf-disease-image/versions/1/Brownspot/BROWNSPOT1_006.jpg"
 
 # Path to your saved model
 model_path = "/home/aidan/code/python/modeling/finals/rice_disease_detector_model.pth"
