@@ -288,6 +288,8 @@ performanmce with img, audio, speech inputs.
 - pooling layer
 - fully connected (fc) layer
 
+flatten layer - take multidimensional inp0ut lke img and make it into 1d (vector)
+
 diff from normal neural networks (vanilla nn / fully conneted neural networks)
 
 - no spacial awareness in vanilla nn, since filters/kernels arent used (grid that slides along an img to learn patterns)

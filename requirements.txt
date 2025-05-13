@@ -1,17 +1,10 @@
-# Core packages
 torch>=1.10.0
 torchvision>=0.11.0
 numpy>=1.19.0
 pandas>=1.3.0
 matplotlib>=3.4.0
 scikit-learn>=1.0.0
-
-# Image processing
 opencv-python>=4.5.0
 Pillow>=8.0.0
-
-# Data loading and management
 kagglehub>=0.2.0
-
-# Progress bars
 tqdm>=4.62.0

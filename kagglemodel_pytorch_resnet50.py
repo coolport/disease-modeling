@@ -238,7 +238,7 @@ def compute_accuracy(model, data_loader, device):
 
 # Training function
 def train_model(
-    model, train_loader, val_loader, criterion, optimizer, num_epochs=2, device="cuda"
+    model, train_loader, val_loader, criterion, optimizer, num_epochs=5, device="cuda"
 ):
     model = model.to(device)
     best_val_acc = 0.0
@@ -335,7 +335,7 @@ optimizer = optim.Adam(
 
 # Train the model
 model, history = train_model(
-    model, train_loader, val_loader, criterion, optimizer, num_epochs=2, device=device
+    model, train_loader, val_loader, criterion, optimizer, num_epochs=5, device=device
 )
 
 # Plot training history

@@ -1,3 +1,5 @@
+testing/
+
 cache
 .cache
 cache/
@@ -15,6 +17,7 @@ venv
 
 # from gitignore.io
 pip-selfcheck.json
+rice-leaf-disease-image/
 
 
 .ipynb_checkpoints
