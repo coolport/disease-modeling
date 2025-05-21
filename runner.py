@@ -17,6 +17,8 @@ from tkinter import (
     Entry,
     DISABLED,
     NORMAL,
+    ttk,
+    font,
 )
 from PIL import Image, ImageTk
 import threading
@@ -24,7 +26,7 @@ import threading
 
 # Define the ResNet50 model architecture
 class ResNet50Model(nn.Module):
-    def __init__(self, num_classes=4, pretrained=True):
+    def __init__(self, num_classes=5, pretrained=True):  # Updated to 5 classes
         super(ResNet50Model, self).__init__()
         # Load pre-trained ResNet50 model
         self.resnet = models.resnet50(pretrained=pretrained)
@@ -103,14 +105,20 @@ def cli_interface():
 
     args = parser.parse_args()
 
-    # Disease class names
-    class_names = {0: "Bacterialblight", 1: "Blast", 2: "Brownspot", 3: "Tungro"}
+    # Updated disease class names with Healthy
+    class_names = {
+        0: "Bacterialblight",
+        1: "Blast",
+        2: "Brownspot",
+        3: "Tungro",
+        4: "Healthy",
+    }
 
     # Load the model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    model = ResNet50Model(num_classes=4)
+    model = ResNet50Model(num_classes=5)  # Updated to 5 classes
     model.load_state_dict(torch.load(args.model, map_location=device))
     model.eval()  # Set to evaluation mode
 
@@ -130,16 +138,16 @@ def cli_interface():
         print(f"Predicted disease: {predicted_class}")
         print(f"Confidence: {confidence:.4f}")
 
-        # Print all class probabilities
-        print("\nAll class probabilities:")
-        for class_idx, prob in enumerate(all_probs):
-            print(f"{class_names[class_idx]}: {prob:.4f}")
-
-        # Display the image
-        plt.figure(figsize=(8, 8))
+        # Display the image with a more modern style
+        plt.figure(figsize=(8, 8), facecolor="white")
         plt.imshow(original_image)
-        plt.title(f"Prediction: {predicted_class} ({confidence:.4f})")
+        plt.title(
+            f"Prediction: {predicted_class} ({confidence:.4f})",
+            fontsize=14,
+            fontweight="bold",
+        )
         plt.axis("off")
+        plt.tight_layout()
         plt.show()
     else:
         print("No image specified. Use --image to specify an image path.")
@@ -150,15 +158,38 @@ class RiceDiseaseApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Rice Leaf Disease Classifier")
-        self.root.geometry("800x600")
+        self.root.geometry("900x700")
         self.root.resizable(True, True)
+        self.root.configure(bg="white")
 
-        # Disease class names
+        # Set up styles and fonts
+        self.style = ttk.Style()
+        self.style.theme_use("clam")  # Using the clam theme as base
+        self.style.configure("TFrame", background="white")
+        self.style.configure("TLabel", background="white", font=("Helvetica", 10))
+        self.style.configure("TButton", background="#f0f0f0", font=("Helvetica", 10))
+        self.style.configure("TEntry", font=("Helvetica", 10))
+        self.style.configure("Header.TLabel", font=("Helvetica", 12, "bold"))
+        self.style.configure("Result.TLabel", font=("Helvetica", 11))
+        self.style.configure("Status.TLabel", background="#f8f8f8", padding=5)
+
+        # Custom button style
+        self.style.configure(
+            "Accent.TButton", background="#4a7abc", foreground="white", padding=5
+        )
+        self.style.map(
+            "Accent.TButton",
+            background=[("active", "#5c8cd5")],
+            foreground=[("active", "white")],
+        )
+
+        # Updated disease class names with Healthy
         self.class_names = {
             0: "Bacterialblight",
             1: "Blast",
             2: "Brownspot",
             3: "Tungro",
+            4: "Healthy",
         }
 
         # Model path
@@ -167,56 +198,94 @@ class RiceDiseaseApp:
         )
 
         # Create frames
-        self.top_frame = Frame(root, padx=10, pady=10)
+        self.top_frame = ttk.Frame(root, padding="20 20 20 10")
         self.top_frame.pack(fill="x")
 
-        self.content_frame = Frame(root, padx=10, pady=10)
+        self.content_frame = ttk.Frame(root, padding="20 10")
         self.content_frame.pack(fill="both", expand=True)
 
-        self.result_frame = Frame(root, padx=10, pady=10)
+        self.result_frame = ttk.Frame(root, padding="20 10 20 20")
         self.result_frame.pack(fill="x")
 
+        # Add a title
+        ttk.Label(
+            self.top_frame,
+            text="Rice Leaf Disease Classifier",
+            style="Header.TLabel",
+            font=("Helvetica", 16, "bold"),
+        ).grid(row=0, column=0, columnspan=4, sticky="w", pady=(0, 15))
+
         # Model path entry
-        Label(self.top_frame, text="Model Path:").grid(
-            row=0, column=0, sticky="w", padx=5, pady=5
+        ttk.Label(self.top_frame, text="Model Path:").grid(
+            row=1, column=0, sticky="w", padx=5, pady=5
         )
-        Entry(self.top_frame, textvariable=self.model_path_var, width=50).grid(
-            row=0, column=1, sticky="we", padx=5, pady=5
+        ttk.Entry(self.top_frame, textvariable=self.model_path_var, width=50).grid(
+            row=1, column=1, sticky="we", padx=5, pady=5
         )
-        Button(self.top_frame, text="Browse", command=self.browse_model).grid(
-            row=0, column=2, sticky="e", padx=5, pady=5
+        ttk.Button(self.top_frame, text="Browse", command=self.browse_model).grid(
+            row=1, column=2, sticky="e", padx=5, pady=5
         )
-        Button(self.top_frame, text="Load Model", command=self.load_model).grid(
-            row=0, column=3, sticky="e", padx=5, pady=5
+        ttk.Button(
+            self.top_frame,
+            text="Load Model",
+            command=self.load_model,
+            style="Accent.TButton",
+        ).grid(row=1, column=3, sticky="e", padx=5, pady=5)
+
+        # Add a separator
+        ttk.Separator(self.top_frame, orient="horizontal").grid(
+            row=2, column=0, columnspan=4, sticky="ew", pady=15
         )
 
-        # Image area
-        self.image_label = Label(self.content_frame, text="No image selected")
-        self.image_label.pack(fill="both", expand=True)
+        # Image area with border
+        image_frame = ttk.Frame(self.content_frame, borderwidth=1, relief="solid")
+        image_frame.pack(fill="both", expand=True, padx=5, pady=5)
 
-        # Control buttons
-        Button(self.result_frame, text="Browse Image", command=self.browse_image).grid(
-            row=0, column=0, padx=5, pady=5
+        self.image_label = ttk.Label(
+            image_frame, text="No image selected", anchor="center", background="#fcfcfc"
         )
-        self.predict_button = Button(
-            self.result_frame, text="Predict", command=self.predict, state=DISABLED
-        )
-        self.predict_button.grid(row=0, column=1, padx=5, pady=5)
+        self.image_label.pack(fill="both", expand=True, padx=40, pady=40)
 
-        # Results
+        # Control buttons in their own frame with better spacing
+        button_frame = ttk.Frame(self.result_frame)
+        button_frame.pack(fill="x", pady=10)
+
+        ttk.Button(button_frame, text="Browse Image", command=self.browse_image).pack(
+            side="left", padx=5
+        )
+
+        self.predict_button = ttk.Button(
+            button_frame,
+            text="Predict",
+            command=self.predict,
+            state=DISABLED,
+            style="Accent.TButton",
+        )
+        self.predict_button.pack(side="left", padx=5)
+
+        # Results - Styled
         self.result_var = StringVar(value="No prediction yet")
-        Label(
+        result_label = ttk.Label(
             self.result_frame,
             textvariable=self.result_var,
-            wraplength=600,
+            wraplength=800,
             justify="left",
-        ).grid(row=1, column=0, columnspan=2, sticky="w", padx=5, pady=5)
+            style="Result.TLabel",
+            font=("Helvetica", 12),
+        )
+        result_label.pack(fill="x", pady=15)
 
-        # Status bar
+        # Status bar - modernized
         self.status_var = StringVar(value="Ready")
-        Label(
-            root, textvariable=self.status_var, bd=1, relief="sunken", anchor="w"
-        ).pack(side="bottom", fill="x")
+        status_frame = ttk.Frame(root, style="Status.TLabel")
+        status_frame.pack(side="bottom", fill="x")
+
+        ttk.Label(
+            status_frame,
+            textvariable=self.status_var,
+            anchor="w",
+            style="Status.TLabel",
+        ).pack(fill="x")
 
         # Initialize variables
         self.model = None
@@ -250,7 +319,7 @@ class RiceDiseaseApp:
 
     def _load_model(self, model_path):
         try:
-            self.model = ResNet50Model(num_classes=4)
+            self.model = ResNet50Model(num_classes=5)  # Updated to 5 classes
             self.model.load_state_dict(torch.load(model_path, map_location=self.device))
             self.model.eval()
             self.root.after(
@@ -281,11 +350,11 @@ class RiceDiseaseApp:
             # Load image with PIL for display
             img = Image.open(image_path)
             # Resize for display while maintaining aspect ratio
-            img.thumbnail((400, 400))
+            img.thumbnail((500, 500))  # Larger thumbnail for better visibility
             photo = ImageTk.PhotoImage(img)
 
             # Update image label
-            self.image_label.config(image=photo)
+            self.image_label.config(image=photo, text="")
             self.image_label.image = photo  # Keep a reference
             self.status_var.set(f"Image loaded: {image_path}")
         except Exception as e:
@@ -318,10 +387,8 @@ class RiceDiseaseApp:
 
             predicted_class = self.class_names[prediction]
 
-            # Prepare result text
-            result_text = f"Predicted Disease: {predicted_class}\nConfidence: {confidence:.4f}\n\nAll Class Probabilities:\n"
-            for class_idx, prob in enumerate(all_probs):
-                result_text += f"- {self.class_names[class_idx]}: {prob:.4f}\n"
+            # Prepare result text - simplified to only show prediction and confidence
+            result_text = f"Predicted: {predicted_class}\nConfidence: {confidence:.4f}"
 
             # Update UI in the main thread
             self.root.after(0, lambda: self.result_var.set(result_text))
